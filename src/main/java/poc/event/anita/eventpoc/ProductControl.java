@@ -1,9 +1,55 @@
 package poc.event.anita.eventpoc;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductControl {
+
+    @Autowired
+    ProductService service;
+
+    @GetMapping("/small/{dt}")
+    public List<String> callReadByLeastDate(@PathVariable("dt") String dt) throws ParseException {
+        Date d=new SimpleDateFormat("yyyy-mm-dd").parse(dt);
+        return service.makeReadByLeastDate(d);
+    }
+
+    @GetMapping("/amt/{data}")
+    public List<Product> callReadByLot(@PathVariable("data") double data){
+        return service.makeReadByLotAmount(data);
+    }
+
+    @GetMapping("/cost/{data}")
+    public Optional<Product> callReadByCost(@PathVariable("data") double data){
+        return service.makeReadByCost(data);
+    }
+
+    @GetMapping("/name/{match}")
+    public List<Product> callReadByName(@PathVariable("match") String match){
+        return service.makeReadByName(match);
+    }
+
+    @GetMapping("/{one}")
+    public Optional<Product> callRead(@PathVariable("one") int one){
+        return service.makeRead(one);
+    }
+
+    @GetMapping("/")
+    public List<Product> callList(){
+        return service.makeList();
+    }
+
+    @PostMapping("/ins")
+    public Product callInsert(@RequestBody Product product){
+        return service.makeInsert(product);
+    }
 
     @GetMapping("/hi")
     public void callSimple(){

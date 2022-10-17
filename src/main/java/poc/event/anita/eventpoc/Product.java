@@ -21,5 +21,6 @@ public class Product {
     @Column(name = "product_cost")
     private double price;
     @Column(name = "product_date_of_manufactured")
+    @Temporal(TemporalType.DATE)
     private Date dom;
 }
