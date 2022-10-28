@@ -12,6 +12,20 @@ public class ProductService {
     @Autowired
     ProductRepo repo;
 
+    public List<String> makeDeleteMultiple(Date dt){
+        List<String> who = repo.findNamesByLeastDate(dt);
+        repo.deleteMoreCustom(dt);
+        return who;
+    }
+
+    public String makeDeleteById(int id){
+        Optional<Product> pro=repo.findById(id);
+        repo.deleteById(id);
+        return pro.get().getName()+" has deleted";
+    }
+
+    public void makeUpdateByCost(double cost){repo.updateByPrice(cost);}
+
     public List<String> makeReadByLeastDate(Date dt){
         return repo.findNamesByLeastDate(dt);
     }

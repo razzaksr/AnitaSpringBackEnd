@@ -15,9 +15,31 @@ public class ProductControl {
     @Autowired
     ProductService service;
 
+    @DeleteMapping("/delby/{dt}")
+    public List<String> callDeleteMore(@PathVariable("dt") String dt) throws ParseException {
+        Date d=new SimpleDateFormat("yyyy-MM-dd").parse(dt);
+        return service.makeDeleteMultiple(d);
+    }
+
+    @DeleteMapping("/del/{num}")
+    public String callDeleteId(@PathVariable("num") int num){
+        return service.makeDeleteById(num);
+    }
+
+    @PutMapping("/upby/{cost}")
+    public void callUpdateByCost(@PathVariable("cost") double cost){
+        service.makeUpdateByCost(cost);
+    }
+
+    @PutMapping("/up")
+    public Product callUpdate(@RequestBody Product product){
+        return service.makeInsert(product);
+    }
+
     @GetMapping("/small/{dt}")
     public List<String> callReadByLeastDate(@PathVariable("dt") String dt) throws ParseException {
-        Date d=new SimpleDateFormat("yyyy-mm-dd").parse(dt);
+        Date d=new SimpleDateFormat("yyyy-MM-dd").parse(dt);
+        System.out.println(d.toLocaleString());
         return service.makeReadByLeastDate(d);
     }
 
